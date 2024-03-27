@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/panda_library.dir/src/examples_common.cpp.o"
   "CMakeFiles/panda_library.dir/src/examples_common.cpp.o.d"
+  "CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o"
+  "CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o.d"
   "CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.o"
   "CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.o.d"
   "libpanda_library.pdb"

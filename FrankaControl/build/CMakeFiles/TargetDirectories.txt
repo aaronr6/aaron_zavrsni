@@ -1,4 +1,5 @@
 /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles/panda_library.dir
 /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles/joint_states.dir
+/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles/joint_position.dir
 /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles/edit_cache.dir
 /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles/rebuild_cache.dir

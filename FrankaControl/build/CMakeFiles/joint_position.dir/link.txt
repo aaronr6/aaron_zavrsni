@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/joint_position.dir/src/movement_joint/joint_position_main.cpp.o -o joint_position  -Wl,-rpath,/home/crta/aaron_zavrsni/FrankaControl/build:/home/crta/libfranka/lib libpanda_library.so /home/crta/libfranka/lib/libfranka.so.0.8.0 

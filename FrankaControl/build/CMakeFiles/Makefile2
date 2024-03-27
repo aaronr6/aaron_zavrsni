@@ -65,6 +65,7 @@ CMAKE_BINARY_DIR = /home/crta/aaron_zavrsni/FrankaControl/build
 # The main recursive "all" target.
 all: CMakeFiles/panda_library.dir/all
 all: CMakeFiles/joint_states.dir/all
+all: CMakeFiles/joint_position.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -74,6 +75,7 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/panda_library.dir/clean
 clean: CMakeFiles/joint_states.dir/clean
+clean: CMakeFiles/joint_position.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -83,12 +85,12 @@ clean: CMakeFiles/joint_states.dir/clean
 CMakeFiles/panda_library.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=3,4,5 "Built target panda_library"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=5,6,7,8 "Built target panda_library"
 .PHONY : CMakeFiles/panda_library.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/panda_library.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/panda_library.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 0
 .PHONY : CMakeFiles/panda_library.dir/rule
@@ -109,12 +111,12 @@ CMakeFiles/panda_library.dir/clean:
 CMakeFiles/joint_states.dir/all: CMakeFiles/panda_library.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_states.dir/build.make CMakeFiles/joint_states.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_states.dir/build.make CMakeFiles/joint_states.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=1,2 "Built target joint_states"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=3,4 "Built target joint_states"
 .PHONY : CMakeFiles/joint_states.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/joint_states.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/joint_states.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 0
 .PHONY : CMakeFiles/joint_states.dir/rule
@@ -127,6 +129,32 @@ joint_states: CMakeFiles/joint_states.dir/rule
 CMakeFiles/joint_states.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_states.dir/build.make CMakeFiles/joint_states.dir/clean
 .PHONY : CMakeFiles/joint_states.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/joint_position.dir
+
+# All Build rule for target.
+CMakeFiles/joint_position.dir/all: CMakeFiles/panda_library.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=1,2 "Built target joint_position"
+.PHONY : CMakeFiles/joint_position.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/joint_position.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/joint_position.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles 0
+.PHONY : CMakeFiles/joint_position.dir/rule
+
+# Convenience name for target.
+joint_position: CMakeFiles/joint_position.dir/rule
+.PHONY : joint_position
+
+# clean rule for target.
+CMakeFiles/joint_position.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/clean
+.PHONY : CMakeFiles/joint_position.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

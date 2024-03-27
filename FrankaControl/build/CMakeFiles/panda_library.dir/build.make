@@ -83,10 +83,24 @@ CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/crta/aaron_zavrsni/FrankaControl/src/robot_comm/joint_states.cpp -o CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.s
 
+CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o: CMakeFiles/panda_library.dir/flags.make
+CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o: /home/crta/aaron_zavrsni/FrankaControl/src/movement_joint/joint_position.cpp
+CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o: CMakeFiles/panda_library.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o -MF CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o.d -o CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o -c /home/crta/aaron_zavrsni/FrankaControl/src/movement_joint/joint_position.cpp
+
+CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/crta/aaron_zavrsni/FrankaControl/src/movement_joint/joint_position.cpp > CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.i
+
+CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/crta/aaron_zavrsni/FrankaControl/src/movement_joint/joint_position.cpp -o CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.s
+
 CMakeFiles/panda_library.dir/src/examples_common.cpp.o: CMakeFiles/panda_library.dir/flags.make
 CMakeFiles/panda_library.dir/src/examples_common.cpp.o: /home/crta/aaron_zavrsni/FrankaControl/src/examples_common.cpp
 CMakeFiles/panda_library.dir/src/examples_common.cpp.o: CMakeFiles/panda_library.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/panda_library.dir/src/examples_common.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/panda_library.dir/src/examples_common.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/panda_library.dir/src/examples_common.cpp.o -MF CMakeFiles/panda_library.dir/src/examples_common.cpp.o.d -o CMakeFiles/panda_library.dir/src/examples_common.cpp.o -c /home/crta/aaron_zavrsni/FrankaControl/src/examples_common.cpp
 
 CMakeFiles/panda_library.dir/src/examples_common.cpp.i: cmake_force
@@ -100,17 +114,19 @@ CMakeFiles/panda_library.dir/src/examples_common.cpp.s: cmake_force
 # Object files for target panda_library
 panda_library_OBJECTS = \
 "CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.o" \
+"CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o" \
 "CMakeFiles/panda_library.dir/src/examples_common.cpp.o"
 
 # External object files for target panda_library
 panda_library_EXTERNAL_OBJECTS =
 
 libpanda_library.so: CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cpp.o
+libpanda_library.so: CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o
 libpanda_library.so: CMakeFiles/panda_library.dir/src/examples_common.cpp.o
 libpanda_library.so: CMakeFiles/panda_library.dir/build.make
 libpanda_library.so: /home/crta/libfranka/lib/libfranka.so.0.8.0
 libpanda_library.so: CMakeFiles/panda_library.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libpanda_library.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library libpanda_library.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/panda_library.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

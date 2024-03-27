@@ -142,6 +142,19 @@ joint_states/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_states.dir/build.make CMakeFiles/joint_states.dir/build
 .PHONY : joint_states/fast
 
+#=============================================================================
+# Target rules for targets named joint_position
+
+# Build rule for target.
+joint_position: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 joint_position
+.PHONY : joint_position
+
+# fast build rule for target.
+joint_position/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/build
+.PHONY : joint_position/fast
+
 src/examples_common.o: src/examples_common.cpp.o
 .PHONY : src/examples_common.o
 
@@ -165,6 +178,54 @@ src/examples_common.s: src/examples_common.cpp.s
 src/examples_common.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/src/examples_common.cpp.s
 .PHONY : src/examples_common.cpp.s
+
+src/movement_joint/joint_position.o: src/movement_joint/joint_position.cpp.o
+.PHONY : src/movement_joint/joint_position.o
+
+# target to build an object file
+src/movement_joint/joint_position.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o
+.PHONY : src/movement_joint/joint_position.cpp.o
+
+src/movement_joint/joint_position.i: src/movement_joint/joint_position.cpp.i
+.PHONY : src/movement_joint/joint_position.i
+
+# target to preprocess a source file
+src/movement_joint/joint_position.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.i
+.PHONY : src/movement_joint/joint_position.cpp.i
+
+src/movement_joint/joint_position.s: src/movement_joint/joint_position.cpp.s
+.PHONY : src/movement_joint/joint_position.s
+
+# target to generate assembly for a file
+src/movement_joint/joint_position.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/panda_library.dir/build.make CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.s
+.PHONY : src/movement_joint/joint_position.cpp.s
+
+src/movement_joint/joint_position_main.o: src/movement_joint/joint_position_main.cpp.o
+.PHONY : src/movement_joint/joint_position_main.o
+
+# target to build an object file
+src/movement_joint/joint_position_main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/src/movement_joint/joint_position_main.cpp.o
+.PHONY : src/movement_joint/joint_position_main.cpp.o
+
+src/movement_joint/joint_position_main.i: src/movement_joint/joint_position_main.cpp.i
+.PHONY : src/movement_joint/joint_position_main.i
+
+# target to preprocess a source file
+src/movement_joint/joint_position_main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/src/movement_joint/joint_position_main.cpp.i
+.PHONY : src/movement_joint/joint_position_main.cpp.i
+
+src/movement_joint/joint_position_main.s: src/movement_joint/joint_position_main.cpp.s
+.PHONY : src/movement_joint/joint_position_main.s
+
+# target to generate assembly for a file
+src/movement_joint/joint_position_main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/joint_position.dir/build.make CMakeFiles/joint_position.dir/src/movement_joint/joint_position_main.cpp.s
+.PHONY : src/movement_joint/joint_position_main.cpp.s
 
 src/robot_comm/joint_states.o: src/robot_comm/joint_states.cpp.o
 .PHONY : src/robot_comm/joint_states.o
@@ -222,11 +283,18 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... joint_position"
 	@echo "... joint_states"
 	@echo "... panda_library"
 	@echo "... src/examples_common.o"
 	@echo "... src/examples_common.i"
 	@echo "... src/examples_common.s"
+	@echo "... src/movement_joint/joint_position.o"
+	@echo "... src/movement_joint/joint_position.i"
+	@echo "... src/movement_joint/joint_position.s"
+	@echo "... src/movement_joint/joint_position_main.o"
+	@echo "... src/movement_joint/joint_position_main.i"
+	@echo "... src/movement_joint/joint_position_main.s"
 	@echo "... src/robot_comm/joint_states.o"
 	@echo "... src/robot_comm/joint_states.i"
 	@echo "... src/robot_comm/joint_states.s"

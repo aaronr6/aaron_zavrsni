@@ -7,7 +7,7 @@ find_package(Eigen3 REQUIRED)
 
 set(PROJECT_SOURCES
     src/robot_comm/joint_states.cpp
-    # src/movement_joint/joint_position.cpp
+    src/movement_joint/joint_position.cpp
     src/examples_common.cpp
     # src/movement_cartesian/linear_motion.cpp
 )
@@ -25,8 +25,8 @@ target_link_libraries(panda_library PRIVATE Franka::Franka)
 add_executable(joint_states src/robot_comm/joint_states_main.cpp)
 target_link_libraries(joint_states PRIVATE panda_library Eigen3::Eigen Franka::Franka)
 
-# add_executable(joint_position src/movement_joint/joint_position_main.cpp)
-# target_link_libraries(joint_position PRIVATE panda_library Eigen3::Eigen Franka::Franka)
+add_executable(joint_position src/movement_joint/joint_position_main.cpp)
+target_link_libraries(joint_position PRIVATE panda_library Eigen3::Eigen Franka::Franka)
 
 # add_executable(linear_motion src/movement_cartesian/linear_motion_main.cpp)
 # target_link_libraries(linear_motion PRIVATE panda_library Eigen3::Eigen Franka::Franka)

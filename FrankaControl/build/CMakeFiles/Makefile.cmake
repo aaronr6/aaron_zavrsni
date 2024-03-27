@@ -59,4 +59,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/panda_library.dir/DependInfo.cmake"
   "CMakeFiles/joint_states.dir/DependInfo.cmake"
+  "CMakeFiles/joint_position.dir/DependInfo.cmake"
   )
