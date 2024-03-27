@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/joint_states.dir/src/robot_comm/joint_states_main.cpp.o -o joint_states  -Wl,-rpath,/home/crta/aaron_zavrsni/FrankaControl/build:/home/crta/libfranka/lib libpanda_library.so /home/crta/libfranka/lib/libfranka.so.0.8.0 
