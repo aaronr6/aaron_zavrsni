@@ -216,7 +216,7 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 Eigen3_DIR:PATH=/usr/lib/cmake/eigen3
 
 //The directory containing a CMake configuration file for Franka.
-Franka_DIR:PATH=/home/crta/libfranka/lib/cmake/Franka
+Franka_DIR:PATH=/usr/local/lib/cmake/Franka
 
 //Value Computed by CMake
 hello_library_BINARY_DIR:STATIC=/home/crta/aaron_zavrsni/FrankaControl/build

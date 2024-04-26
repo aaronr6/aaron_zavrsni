@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/crta/aaron_zavrsni/FrankaControl/include -I/home/crta/libfranka/build -isystem /usr/include/eigen3 -isystem /home/crta/libfranka/include
+CXX_INCLUDES = -I/home/crta/aaron_zavrsni/FrankaControl/include -I/home/crta/libfranka/build -isystem /usr/include/eigen3
 
 CXX_FLAGS = 
 

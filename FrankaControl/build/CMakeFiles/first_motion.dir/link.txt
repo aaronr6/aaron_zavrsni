@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/first_motion.dir/src/first_motion/first_motion_main.cpp.o -o first_motion  -Wl,-rpath,/home/crta/aaron_zavrsni/FrankaControl/build:/usr/local/lib libpanda_library.so /usr/local/lib/libfranka.so.0.8.0 

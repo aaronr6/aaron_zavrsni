@@ -93,7 +93,7 @@ joint_position_EXTERNAL_OBJECTS =
 joint_position: CMakeFiles/joint_position.dir/src/movement_joint/joint_position_main.cpp.o
 joint_position: CMakeFiles/joint_position.dir/build.make
 joint_position: libpanda_library.so
-joint_position: /home/crta/libfranka/lib/libfranka.so.0.8.0
+joint_position: /usr/local/lib/libfranka.so.0.8.0
 joint_position: CMakeFiles/joint_position.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable joint_position"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/joint_position.dir/link.txt --verbose=$(VERBOSE)

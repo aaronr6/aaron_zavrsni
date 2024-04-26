@@ -93,7 +93,7 @@ joint_states_EXTERNAL_OBJECTS =
 joint_states: CMakeFiles/joint_states.dir/src/robot_comm/joint_states_main.cpp.o
 joint_states: CMakeFiles/joint_states.dir/build.make
 joint_states: libpanda_library.so
-joint_states: /home/crta/libfranka/lib/libfranka.so.0.8.0
+joint_states: /usr/local/lib/libfranka.so.0.8.0
 joint_states: CMakeFiles/joint_states.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable joint_states"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/joint_states.dir/link.txt --verbose=$(VERBOSE)

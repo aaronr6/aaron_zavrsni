@@ -124,7 +124,7 @@ libpanda_library.so: CMakeFiles/panda_library.dir/src/robot_comm/joint_states.cp
 libpanda_library.so: CMakeFiles/panda_library.dir/src/movement_joint/joint_position.cpp.o
 libpanda_library.so: CMakeFiles/panda_library.dir/src/examples_common.cpp.o
 libpanda_library.so: CMakeFiles/panda_library.dir/build.make
-libpanda_library.so: /home/crta/libfranka/lib/libfranka.so.0.8.0
+libpanda_library.so: /usr/local/lib/libfranka.so.0.8.0
 libpanda_library.so: CMakeFiles/panda_library.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/crta/aaron_zavrsni/FrankaControl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library libpanda_library.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/panda_library.dir/link.txt --verbose=$(VERBOSE)

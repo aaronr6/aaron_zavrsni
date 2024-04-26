@@ -10,6 +10,8 @@ set(PROJECT_SOURCES
     src/movement_joint/joint_position.cpp
     src/examples_common.cpp
     # src/movement_cartesian/linear_motion.cpp
+    # src/first_motion/first_motion.cpp
+    # src/motion_generator/motion_generator.cpp
 )
 
 
@@ -31,3 +33,11 @@ target_link_libraries(joint_position PRIVATE panda_library Eigen3::Eigen Franka:
 # add_executable(linear_motion src/movement_cartesian/linear_motion_main.cpp)
 # target_link_libraries(linear_motion PRIVATE panda_library Eigen3::Eigen Franka::Franka)
 
+# add_executable(movement_control src/movement_control/movement_control_main.cpp)
+# target_link_libraries(movement_control PRIVATE panda_library Eigen3::Eigen Franka::Franka)
+
+# add_executable(first_motion src/first_motion/first_motion_main.cpp)
+# target_link_libraries(first_motion PRIVATE panda_library Eigen3::Eigen Franka::Franka)
+
+# add_executable(motion_generator src/motion_generator/motion_generator.cpp)
+# target_link_libraries(motion_generator PRIVATE panda_library Eigen3::Eigen Franka::Franka)

@@ -18,7 +18,7 @@ namespace joint_position
         robot->setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
 
         const std::array<double, 7> q_goal = {{ 0, M_PI_4, 0, - M_PI_2, 0, M_PI_2, M_PI_4}};
-        MotionGenerator motion_generator(0.2, q_goal);
+        MotionGenerator motion_generator(0.5, q_goal);
         robot->control(motion_generator);
    }
-} //namespace joint_positioncd
+} //namespace joint_position

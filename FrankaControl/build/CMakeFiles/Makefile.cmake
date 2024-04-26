@@ -35,13 +35,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.26.4/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.4/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.4/CMakeSystem.cmake"
-  "/home/crta/libfranka/lib/cmake/Franka/FrankaConfig.cmake"
-  "/home/crta/libfranka/lib/cmake/Franka/FrankaConfigVersion.cmake"
-  "/home/crta/libfranka/lib/cmake/Franka/FrankaTargets-release.cmake"
-  "/home/crta/libfranka/lib/cmake/Franka/FrankaTargets.cmake"
   "/usr/lib/cmake/eigen3/Eigen3Config.cmake"
   "/usr/lib/cmake/eigen3/Eigen3ConfigVersion.cmake"
   "/usr/lib/cmake/eigen3/Eigen3Targets.cmake"
+  "/usr/local/lib/cmake/Franka/FrankaConfig.cmake"
+  "/usr/local/lib/cmake/Franka/FrankaConfigVersion.cmake"
+  "/usr/local/lib/cmake/Franka/FrankaTargets-release.cmake"
+  "/usr/local/lib/cmake/Franka/FrankaTargets.cmake"
   )
 
 # The corresponding makefile is:
