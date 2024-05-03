@@ -8,15 +8,15 @@
 
 #include "examples_common.h"
 
-void writeVelocityStates(double time, double v_x, double v_y, double v_z, std::ofstream& file) {
-    file << time << " " << v_x << " " << v_y << " " << v_z << "\n";
+void writeFeedForward(double time, double theta_x, double theta_z, double theta_d_x, double theta_d_z, std::ofstream& file) {
+    file << time << " " << theta_x << " " << theta_z << " " << theta_d_x << " " << theta_d_z << "\n";
 }
 
 int main() {
     // Connect to the robot
     franka::Robot robot("192.168.40.45");
 
-    std::ofstream outputFile("velocity_states.txt");
+    std::ofstream outputFile("feed_forward.txt");
 
   try {
     setDefaultBehavior(robot);
@@ -54,32 +54,33 @@ int main() {
         lower_force_thresholds_acceleration, upper_force_thresholds_acceleration,
         lower_force_thresholds_nominal, upper_force_thresholds_nominal);
 
-
-
+    std::array<double, 16> initial_pose;
     double time = 0.0;
-    robot.control([=, &time, &outputFile](const franka::RobotState&,
-                             franka::Duration period) -> franka::CartesianVelocities {
+    robot.control([&time, &initial_pose, &outputFile](const franka::RobotState& robot_state,
+                                franka::Duration period) -> franka::CartesianPose {
         time += period.toSec();
 
-        double cycle = std::floor(pow(-1.0, (time - std::fmod(time, time_max)) / time_max));
-        double v = cycle * v_max / 2.0 * (1.0 - std::cos(2.0 * M_PI / time_max * time));
-        double v_x = std::cos(angle) * v;
-        double v_y = std::sin(angle) * v;
-        double v_z = -std::sin(angle) * v;
+        if (time == 0.0) {
+        initial_pose = robot_state.O_T_EE_c;
+      }
 
-        // double v_x = a * std::cosh(time);
-        // double v_y = 0.0;
-        // double v_z = b * std::sinh(time);
+      constexpr double kRadius = 0.3;
+      double angle = M_PI / 4 * (1 - std::cos(M_PI / 2.0 * time));
+      double delta_x = kRadius * std::sin(angle);
+      double delta_z = kRadius * (std::cos(angle) - 1);
 
+      std::array<double, 16> new_pose = initial_pose;
+      new_pose[12] += delta_x;
+      new_pose[14] += delta_z;
 
-        writeVelocityStates(time, v_x, v_y, v_z, outputFile);
+      if (time >= 4.0) {
+        std::cout << std::endl << "Finished motion, shutting down example" << std::endl;
+        return franka::MotionFinished(new_pose);
+      }
 
-        franka::CartesianVelocities output = {{v_x, v_y, v_z, 0.0, 0.0, 0.0}};
-        if (time >= 2 * time_max) {
-            std::cout << std::endl << "Finished motion, shutting down example" << std::endl;
-            return franka::MotionFinished(output);
-        }
-        return output;
+      writeFeedForward(time, robot_state.O_T_EE[12], robot_state.O_T_EE[14], delta_x+initial_pose[12], delta_z+initial_pose[14], outputFile);
+
+      return new_pose;
     });
   } catch (const franka::Exception& e) {
     std::cout << e.what() << std::endl;
