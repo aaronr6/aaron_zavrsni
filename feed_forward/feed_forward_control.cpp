@@ -54,6 +54,10 @@ int main() {
         lower_force_thresholds_acceleration, upper_force_thresholds_acceleration,
         lower_force_thresholds_nominal, upper_force_thresholds_nominal);
 
+//#################################################################################################
+//########################## USING CARTESIAN POSE FOR GENERATING MOTION ###########################
+//#################################################################################################
+
     std::array<double, 16> initial_pose;
     double time = 0.0;
     robot.control([&time, &initial_pose, &outputFile](const franka::RobotState& robot_state,
@@ -82,6 +86,32 @@ int main() {
 
       return new_pose;
     });
+
+//#################################################################################################
+//#################################################################################################
+//#################################################################################################
+
+    // std::vector<double> trajectory;
+    // int joint_number = 0;
+
+    // robot.control(
+    //   [&](const franka::RobotState&, franka::Duration period) -> franka::JointVelocities {
+    //     index += period.toMSec();
+
+    //     if (index >= trajectory.size()) {
+    //       index = trajectory.size() - 1;
+    //     }
+
+    //     franka::JointVelocities velocities{{0, 0, 0, 0, 0, 0, 0}};
+    //     velocities.dq[joint_number] = trajectory[index];
+
+    //     if (index >= trajectory.size() - 1) {
+    //       return franka::MotionFinished(velocities);
+    //     }
+    //     return velocities;
+    //   });
+
+
   } catch (const franka::Exception& e) {
     std::cout << e.what() << std::endl;
     outputFile.close();

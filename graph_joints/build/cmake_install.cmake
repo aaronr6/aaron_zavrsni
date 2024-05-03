@@ -1,4 +1,4 @@
-# Install script for directory: /home/crta/aaron_zavrsni/graph
+# Install script for directory: /home/crta/aaron_zavrsni/graph_joints
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/crta/aaron_zavrsni/graph/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/crta/aaron_zavrsni/graph_joints/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

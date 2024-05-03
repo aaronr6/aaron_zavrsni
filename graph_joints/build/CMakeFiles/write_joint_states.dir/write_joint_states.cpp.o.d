@@ -1,5 +1,5 @@
 CMakeFiles/write_joint_states.dir/write_joint_states.cpp.o: \
- /home/crta/aaron_zavrsni/graph/write_joint_states.cpp \
+ /home/crta/aaron_zavrsni/graph_joints/write_joint_states.cpp \
  /usr/include/stdc-predef.h /usr/include/franka/exception.h \
  /usr/include/c++/9/stdexcept /usr/include/c++/9/exception \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
@@ -183,7 +183,7 @@ CMakeFiles/write_joint_states.dir/write_joint_states.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h \
  /usr/include/c++/9/bits/fstream.tcc \
- /home/crta/aaron_zavrsni/graph/examples_common.h \
+ /home/crta/aaron_zavrsni/graph_joints/examples_common.h \
  /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \

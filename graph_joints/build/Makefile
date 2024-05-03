@@ -57,10 +57,10 @@ RM = /home/crta/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/crta/aaron_zavrsni/graph
+CMAKE_SOURCE_DIR = /home/crta/aaron_zavrsni/graph_joints
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/crta/aaron_zavrsni/graph/build
+CMAKE_BINARY_DIR = /home/crta/aaron_zavrsni/graph_joints/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/graph/build/CMakeFiles /home/crta/aaron_zavrsni/graph/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/graph_joints/build/CMakeFiles /home/crta/aaron_zavrsni/graph_joints/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/graph/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/crta/aaron_zavrsni/graph_joints/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

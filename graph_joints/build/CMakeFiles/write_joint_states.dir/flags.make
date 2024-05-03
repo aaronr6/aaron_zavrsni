@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/crta/aaron_zavrsni/graph -I/usr/include/eigen3
+CXX_INCLUDES = -I/home/crta/aaron_zavrsni/graph_joints -I/usr/include/eigen3
 
 CXX_FLAGS = 
 
