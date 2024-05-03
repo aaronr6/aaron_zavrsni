@@ -49,10 +49,6 @@ int main() {
         std::cerr << "Franka exception: " << e.what() << std::endl;
         outputFile.close();
         return -1;
-    } catch (const std::exception& e) {
-        std::cerr << "Standard exception: " << e.what() << std::endl;
-        outputFile.close();
-        return -1;
     }
 
     // Close the output file

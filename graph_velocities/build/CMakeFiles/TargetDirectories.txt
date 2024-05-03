@@ -1,0 +1,3 @@
+/home/crta/aaron_zavrsni/graph_velocities/build/CMakeFiles/write_velocity_states.dir
+/home/crta/aaron_zavrsni/graph_velocities/build/CMakeFiles/edit_cache.dir
+/home/crta/aaron_zavrsni/graph_velocities/build/CMakeFiles/rebuild_cache.dir

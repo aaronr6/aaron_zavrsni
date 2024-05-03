@@ -8,8 +8,8 @@ data = np.loadtxt('../build/velocity_states.txt')
 time = np.arange(0, data.shape[0])
 
 # Plot each velocity state
-for i in range(data.shape[1]):
-    plt.plot(time, data[:, i], label=f'Velocity {i+1}')
+for i in [1, 2, 3]:
+    plt.plot(time, data[:, i], label=f'Velocity {i}')
 
 plt.xlabel('Time')
 plt.ylabel('Velocity State')
