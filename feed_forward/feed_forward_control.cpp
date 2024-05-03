@@ -8,8 +8,6 @@
 
 #include "examples_common.h"
 
-
-
 void writeVelocityStates(double time, double v_x, double v_y, double v_z, std::ofstream& file) {
     file << time << " " << v_x << " " << v_y << " " << v_z << "\n";
 }
@@ -56,9 +54,7 @@ int main() {
         lower_force_thresholds_acceleration, upper_force_thresholds_acceleration,
         lower_force_thresholds_nominal, upper_force_thresholds_nominal);
 
-    double time_max = 4.0;
-    double v_max = 0.2;
-    double angle = M_PI / 4.0;
+
 
     double time = 0.0;
     robot.control([=, &time, &outputFile](const franka::RobotState&,
@@ -68,8 +64,13 @@ int main() {
         double cycle = std::floor(pow(-1.0, (time - std::fmod(time, time_max)) / time_max));
         double v = cycle * v_max / 2.0 * (1.0 - std::cos(2.0 * M_PI / time_max * time));
         double v_x = std::cos(angle) * v;
-        double v_y = 0;
+        double v_y = std::sin(angle) * v;
         double v_z = -std::sin(angle) * v;
+
+        // double v_x = a * std::cosh(time);
+        // double v_y = 0.0;
+        // double v_z = b * std::sinh(time);
+
 
         writeVelocityStates(time, v_x, v_y, v_z, outputFile);
 
@@ -88,7 +89,7 @@ int main() {
 
   outputFile.close();
 
-  system("python3 ../plot_velocity_states.py");
+  system("python3 ../feed_forward_control.py");
 
   return 0;
 }
