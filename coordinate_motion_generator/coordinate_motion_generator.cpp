@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Franka Emika GmbH
 // Use of this source code is governed by the Apache-2.0 license, see LICENSE
-#include "examples_common.h"
+#include "coordinate_motion_generator.h"
 
 #include <algorithm>
 #include <array>
@@ -19,7 +19,7 @@ void setDefaultBehavior(franka::Robot& robot) {
   robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
 }
 
-MotionGenerator::MotionGenerator(double speed_factor, const std::array<double, 6> p_goal)
+MotionGenerator::MotionGenerator(double speed_factor, const std::array<double, 3> p_goal)
     : p_goal_(p_goal.data()) {
   dp_max_ *= speed_factor;
   ddp_max_start_ *= speed_factor;
@@ -33,14 +33,14 @@ MotionGenerator::MotionGenerator(double speed_factor, const std::array<double, 6
   p_1_.setZero();
 }
 
-bool MotionGenerator::calculateDesiredValues(double t, Vector7d* delta_p_d) const {
-  Vector7i sign_delta_p;
+bool MotionGenerator::calculateDesiredValues(double t, Vector3d* delta_p_d) const {
+  Vector3i sign_delta_p;
   sign_delta_p << delta_p_.cwiseSign().cast<int>();
-  Vector7d t_d = t_2_sync_ - t_1_sync_;
-  Vector7d delta_t_2_sync = t_f_sync_ - t_2_sync_;
-  std::array<bool, 6> joint_motion_finished{};
+  Vector3d t_d = t_2_sync_ - t_1_sync_;
+  Vector3d delta_t_2_sync = t_f_sync_ - t_2_sync_;
+  std::array<bool, 3> tcp_motion_finished{};
 
-  for (size_t i = 0; i < 6; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (std::abs(delta_p_[i]) < kDeltaQMotionFinished) {
       (*delta_p_d)[i] = 0;
       joint_motion_finished[i] = true;
@@ -60,25 +60,28 @@ bool MotionGenerator::calculateDesiredValues(double t, Vector7d* delta_p_d) cons
                               dp_max_sync_[i] * sign_delta_p[i];
       } else {
         (*delta_p_d)[i] = delta_p_[i];
-        joint_motion_finished[i] = true;
+        tcp_motion_finished[i] = true;
       }
     }
   }
-  return std::all_of(joint_motion_finished.cbegin(), joint_motion_finished.cend(),
+  return std::all_of(tcp_motion_finished.cbegin(), tcp_motion_finished.cend(),
                      [](bool x) { return x; });
 }
 
 void MotionGenerator::calculateSynchronizedValues() {
-  Vector7d dp_max_reach(dp_max_);
-  Vector7d t_f = Vector7d::Zero();
-  Vector7d delta_t_2 = Vector7d::Zero();
-  Vector7d t_1 = Vector7d::Zero();
-  Vector7d delta_t_2_sync = Vector7d::Zero();
-  Vector7i sign_delta_p;kDeltaQMotionFinished
+  Vector3d dp_max_reach(dp_max_);
+  Vector3d t_f = Vector3d::Zero();
+  Vector3d delta_t_2 = Vector3d::Zero();
+  Vector3d t_1 = Vector3d::Zero();
+  Vector3d delta_t_2_sync = Vector3d::Zero();
+  Vector3i sign_delta_p;
+  sign_delta_p << delta_p_.cwiseSign().cast<int>();
+
+  for (size_t i = 0; i < 3; i++) {
     if (std::abs(delta_p_[i]) > kDeltaQMotionFinished) {
       if (std::abs(delta_p_[i]) < (3.0 / 4.0 * (std::pow(dp_max_[i], 2.0) / ddp_max_start_[i]) +
                                    3.0 / 4.0 * (std::pow(dp_max_[i], 2.0) / ddp_max_goal_[i]))) {
-        dp_max_reach[i] = std::sprt(4.0 / 3.0 * delta_p_[i] * sign_delta_p[i] *
+        dp_max_reach[i] = std::sqrt(4.0 / 3.0 * delta_p_[i] * sign_delta_p[i] *
                                     (ddp_max_start_[i] * ddp_max_goal_[i]) /
                                     (ddp_max_start_[i] + ddp_max_goal_[i]));
       }
@@ -88,7 +91,7 @@ void MotionGenerator::calculateSynchronizedValues() {
     }
   }
   double max_t_f = t_f.maxCoeff();
-  for (size_t i = 0; i < 7; i++) {
+  for (size_t i = 0; i < 3; i++) {
     if (std::abs(delta_p_[i]) > kDeltaQMotionFinished) {
       double a = 1.5 / 2.0 * (ddp_max_goal_[i] + ddp_max_start_[i]);
       double b = -1.0 * max_t_f * ddp_max_goal_[i] * ddp_max_start_[i];
@@ -97,7 +100,7 @@ void MotionGenerator::calculateSynchronizedValues() {
       if (delta < 0.0) {
         delta = 0.0;
       }
-      dp_max_sync_[i] = (-1.0 * b - std::sprt(delta)) / (2.0 * a);
+      dp_max_sync_[i] = (-1.0 * b - std::sqrt(delta)) / (2.0 * a);
       t_1_sync_[i] = 1.5 * dp_max_sync_[i] / ddp_max_start_[i];
       delta_t_2_sync[i] = 1.5 * dp_max_sync_[i] / ddp_max_goal_[i];
       t_f_sync_[i] =
@@ -108,22 +111,28 @@ void MotionGenerator::calculateSynchronizedValues() {
   }
 }
 
-franka::JointPositions MotionGenerator::operator()(const franka::RobotState& robot_state,
+franka::CartesianPose MotionGenerator::operator()(const franka::RobotState& robot_state,
                                                    franka::Duration period) {
   time_ += period.toSec();
 
   if (time_ == 0.0) {
-    p_start_ = Vector7d(robot_state.p_d.data());
+    p_start_ = Vector3d(robot_state.O_T_EE_d[12], robot_state.O_T_EE_d[13], robot_state.O_T_EE_d[14]);
     delta_p_ = p_goal_ - p_start_;
     calculateSynchronizedValues();
   }
 
-  Vector7d delta_p_d;
+  Vector3d delta_p_d;
   bool motion_finished = calculateDesiredValues(time_, &delta_p_d);
 
-  std::array<double, 7> joint_positions;
-  Eigen::VectorXd::Map(&joint_positions[0], 7) = (p_start_ + delta_p_d);
-  franka::JointPositions output(joint_positions);
+  std::array<double, 16> tcp_positions_extended = robot_state.O_T_EE; // Initialize with appropriate values
+  
+  std::array<double, 3> tcp_positions;
+  Eigen::VectorXd::Map(&tcp_positions[0], 3) = (p_start_ + delta_p_d);
+ 
+  tcp_positions_extended[12] = tcp_positions[0];
+  tcp_positions_extended[13] = tcp_positions[1];
+  tcp_positions_extended[14] = tcp_positions[2];
+  franka::CartesianPose output(tcp_positions_extended);
   output.motion_finished = motion_finished;
   return output;
 }

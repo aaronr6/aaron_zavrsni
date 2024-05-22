@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/move_robot.dir/move_robot.cpp.o CMakeFiles/move_robot.dir/cubic_trajectory_generator.cpp.o -o move_robot  -Wl,-rpath,/usr/local/lib /usr/local/lib/libfranka.so.0.8.0 

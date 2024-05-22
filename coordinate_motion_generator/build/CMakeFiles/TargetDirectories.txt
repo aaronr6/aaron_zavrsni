@@ -1,0 +1,3 @@
+/home/crta/aaron_zavrsni/coordinate_motion_generator/build/CMakeFiles/cmg_test_run.dir
+/home/crta/aaron_zavrsni/coordinate_motion_generator/build/CMakeFiles/edit_cache.dir
+/home/crta/aaron_zavrsni/coordinate_motion_generator/build/CMakeFiles/rebuild_cache.dir

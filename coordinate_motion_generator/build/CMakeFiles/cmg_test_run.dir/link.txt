@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/cmg_test_run.dir/cmg_test_run.cpp.o CMakeFiles/cmg_test_run.dir/coordinate_motion_generator.cpp.o -o cmg_test_run  -Wl,-rpath,/usr/local/lib /usr/local/lib/libfranka.so.0.8.0 
