@@ -7,7 +7,7 @@
 
 // Function to write joint states to a file
 void writeJointStates(const franka::RobotState& state, std::ofstream& file) {
-    for (double joint : state.q) {
+    for (double joint : state.O_T_EE) {
         file << joint << " ";
     }
     file << "\n";
