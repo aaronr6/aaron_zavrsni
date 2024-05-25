@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <iostream>
 
 #include <franka/exception.h>
 #include <franka/robot.h>
@@ -63,6 +64,9 @@ bool MotionGenerator::calculateDesiredValues(double t, Vector7d* delta_q_d) cons
         joint_motion_finished[i] = true;
       }
     }
+  }
+  for (const auto& value : joint_motion_finished) {
+  std::cout << value << '\n';
   }
   return std::all_of(joint_motion_finished.cbegin(), joint_motion_finished.cend(),
                      [](bool x) { return x; });

@@ -3,6 +3,7 @@
 #include <array>
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 
 #include <franka/control_types.h>
 #include <franka/duration.h>
@@ -36,7 +37,7 @@ class MotionGenerator {
    * @param[in] speed_factor General speed factor in range [0, 1].
    * @param[in] c_goal Target joint positions.
    */
-  MotionGenerator(double speed_factor, const std::array<double, 3> c_goal);
+  MotionGenerator(double speed_factor, const std::array<double, 6> c_goal);
 
   /**
    * Sends joint position calculations
@@ -50,11 +51,15 @@ class MotionGenerator {
 
  private:
   using Vector3d = Eigen::Matrix<double, 3, 1, Eigen::ColMajor>;
+  using Vector4d = Eigen::Matrix<double, 4, 1, Eigen::ColMajor>;
   using Vector3i = Eigen::Matrix<int, 3, 1, Eigen::ColMajor>;
   using Vector16d = Eigen::Matrix<double, 16, 1, Eigen::ColMajor>;
+  using Matrix3d = Eigen::Matrix<double, 3, 3, Eigen::RowMajor>;
+  using Matrix4d = Eigen::Matrix<double, 4, 4, Eigen::RowMajor>;
+  using Quaterniond = Eigen::Quaternion<double>;
 
 
-  bool calculateDesiredValues(double t, Vector3d* delta_c_d) const;
+  bool calculateDesiredValues(double t, Vector3d* delta_c_d, Quaterniond* q_d_) const;
   void calculateSynchronizedValues();
 
   static constexpr double kDeltaCMotionFinished = 1e-6;
@@ -62,9 +67,14 @@ class MotionGenerator {
 
   Vector3d c_start_;
   Vector3d delta_c_;
+  Matrix3d Rot;
+  Matrix3d Rot_d;
 
   Vector16d c_start_aux_;
 
+  Quaterniond q_0_;
+  Quaterniond q_1_;
+  Quaterniond q_delta_;
 
 
   Vector3d dc_max_sync_;
@@ -73,9 +83,11 @@ class MotionGenerator {
   Vector3d t_f_sync_;
   Vector3d c_1_;
 
-  double time_ = 0.0;
 
-  Vector3d dc_max_ = (Vector3d() << 0.2, 0.2, 0.2).finished();
-  Vector3d ddc_max_start_ = (Vector3d() << 0.2, 0.2, 0.2).finished();
-  Vector3d ddc_max_goal_ = (Vector3d() << 0.2, 0.2, 0.2).finished();
+  double time_ = 0.0;
+  double max_t_f = 0.0;
+
+  Vector3d dc_max_ = (Vector3d() << 1.0, 1.0, 1.0).finished();
+  Vector3d ddc_max_start_ = (Vector3d() << 1.0, 1.0, 1.0).finished();
+  Vector3d ddc_max_goal_ = (Vector3d() << 1.0, 1.0, 1.0).finished();
 };

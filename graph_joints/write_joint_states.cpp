@@ -21,8 +21,8 @@ int main() {
     std::array<double, 7> final_position = {{ 0, M_PI_4, 0, - M_PI_2, 0, M_PI_2, M_PI_4}};
 
     // Create MotionGenerator objects for the starting and final positions
-    MotionGenerator starting_motion_generator(1, starting_position);
-    MotionGenerator final_motion_generator(1, final_position);
+    MotionGenerator starting_motion_generator(0.1, starting_position);
+    MotionGenerator final_motion_generator(0.1, final_position);
 
     // Open a file to write joint states
     std::ofstream outputFile("joint_states.txt");

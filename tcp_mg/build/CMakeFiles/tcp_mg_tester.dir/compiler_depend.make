@@ -337,6 +337,51 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg.cpp.o: /home/crta/aaron_zavrsni/tcp_mg/tcp_m
   /usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h \
   /usr/include/eigen3/Eigen/src/Core/GlobalFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h \
+  /usr/include/eigen3/Eigen/Geometry \
+  /usr/include/eigen3/Eigen/Core \
+  /usr/include/eigen3/Eigen/SVD \
+  /usr/include/eigen3/Eigen/QR \
+  /usr/include/eigen3/Eigen/Cholesky \
+  /usr/include/eigen3/Eigen/Jacobi \
+  /usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h \
+  /usr/include/eigen3/Eigen/src/Cholesky/LLT.h \
+  /usr/include/eigen3/Eigen/src/Cholesky/LDLT.h \
+  /usr/include/eigen3/Eigen/Householder \
+  /usr/include/eigen3/Eigen/src/Householder/Householder.h \
+  /usr/include/eigen3/Eigen/src/Householder/HouseholderSequence.h \
+  /usr/include/eigen3/Eigen/src/Householder/BlockHouseholder.h \
+  /usr/include/eigen3/Eigen/src/QR/HouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/FullPivHouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
+  /usr/include/eigen3/Eigen/src/misc/RealSvd2x2.h \
+  /usr/include/eigen3/Eigen/src/SVD/UpperBidiagonalization.h \
+  /usr/include/eigen3/Eigen/src/SVD/SVDBase.h \
+  /usr/include/eigen3/Eigen/src/SVD/JacobiSVD.h \
+  /usr/include/eigen3/Eigen/src/SVD/BDCSVD.h \
+  /usr/include/eigen3/Eigen/LU \
+  /usr/include/eigen3/Eigen/src/misc/Kernel.h \
+  /usr/include/eigen3/Eigen/src/misc/Image.h \
+  /usr/include/eigen3/Eigen/src/LU/FullPivLU.h \
+  /usr/include/eigen3/Eigen/src/LU/PartialPivLU.h \
+  /usr/include/eigen3/Eigen/src/LU/Determinant.h \
+  /usr/include/eigen3/Eigen/src/LU/InverseImpl.h \
+  /usr/include/eigen3/Eigen/src/LU/arch/Inverse_SSE.h \
+  /usr/include/eigen3/Eigen/src/Geometry/OrthoMethods.h \
+  /usr/include/eigen3/Eigen/src/Geometry/EulerAngles.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Homogeneous.h \
+  /usr/include/eigen3/Eigen/src/Geometry/RotationBase.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Rotation2D.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Quaternion.h \
+  /usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Transform.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Translation.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Scaling.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Hyperplane.h \
+  /usr/include/eigen3/Eigen/src/Geometry/ParametrizedLine.h \
+  /usr/include/eigen3/Eigen/src/Geometry/AlignedBox.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Umeyama.h \
+  /usr/include/eigen3/Eigen/src/Geometry/arch/Geometry_SSE.h \
   /usr/include/franka/control_types.h \
   /usr/include/franka/duration.h \
   /usr/include/c++/9/chrono \
@@ -746,7 +791,52 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
   /usr/include/eigen3/Eigen/src/Core/Reverse.h \
   /usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h \
   /usr/include/eigen3/Eigen/src/Core/GlobalFunctions.h \
-  /usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h
+  /usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h \
+  /usr/include/eigen3/Eigen/Geometry \
+  /usr/include/eigen3/Eigen/Core \
+  /usr/include/eigen3/Eigen/SVD \
+  /usr/include/eigen3/Eigen/QR \
+  /usr/include/eigen3/Eigen/Cholesky \
+  /usr/include/eigen3/Eigen/Jacobi \
+  /usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h \
+  /usr/include/eigen3/Eigen/src/Cholesky/LLT.h \
+  /usr/include/eigen3/Eigen/src/Cholesky/LDLT.h \
+  /usr/include/eigen3/Eigen/Householder \
+  /usr/include/eigen3/Eigen/src/Householder/Householder.h \
+  /usr/include/eigen3/Eigen/src/Householder/HouseholderSequence.h \
+  /usr/include/eigen3/Eigen/src/Householder/BlockHouseholder.h \
+  /usr/include/eigen3/Eigen/src/QR/HouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/FullPivHouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h \
+  /usr/include/eigen3/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
+  /usr/include/eigen3/Eigen/src/misc/RealSvd2x2.h \
+  /usr/include/eigen3/Eigen/src/SVD/UpperBidiagonalization.h \
+  /usr/include/eigen3/Eigen/src/SVD/SVDBase.h \
+  /usr/include/eigen3/Eigen/src/SVD/JacobiSVD.h \
+  /usr/include/eigen3/Eigen/src/SVD/BDCSVD.h \
+  /usr/include/eigen3/Eigen/LU \
+  /usr/include/eigen3/Eigen/src/misc/Kernel.h \
+  /usr/include/eigen3/Eigen/src/misc/Image.h \
+  /usr/include/eigen3/Eigen/src/LU/FullPivLU.h \
+  /usr/include/eigen3/Eigen/src/LU/PartialPivLU.h \
+  /usr/include/eigen3/Eigen/src/LU/Determinant.h \
+  /usr/include/eigen3/Eigen/src/LU/InverseImpl.h \
+  /usr/include/eigen3/Eigen/src/LU/arch/Inverse_SSE.h \
+  /usr/include/eigen3/Eigen/src/Geometry/OrthoMethods.h \
+  /usr/include/eigen3/Eigen/src/Geometry/EulerAngles.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Homogeneous.h \
+  /usr/include/eigen3/Eigen/src/Geometry/RotationBase.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Rotation2D.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Quaternion.h \
+  /usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Transform.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Translation.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Scaling.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Hyperplane.h \
+  /usr/include/eigen3/Eigen/src/Geometry/ParametrizedLine.h \
+  /usr/include/eigen3/Eigen/src/Geometry/AlignedBox.h \
+  /usr/include/eigen3/Eigen/src/Geometry/Umeyama.h \
+  /usr/include/eigen3/Eigen/src/Geometry/arch/Geometry_SSE.h
 
 
 /usr/include/c++/9/bits/fstream.tcc:
@@ -787,11 +877,53 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/franka/control_types.h:
 
+/usr/include/eigen3/Eigen/src/Geometry/arch/Geometry_SSE.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Scaling.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Transform.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Rotation2D.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Homogeneous.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/OrthoMethods.h:
+
+/usr/include/eigen3/Eigen/src/LU/arch/Inverse_SSE.h:
+
+/usr/include/eigen3/Eigen/src/LU/InverseImpl.h:
+
+/usr/include/eigen3/Eigen/src/LU/Determinant.h:
+
+/usr/include/eigen3/Eigen/LU:
+
+/usr/include/eigen3/Eigen/src/SVD/BDCSVD.h:
+
+/usr/include/eigen3/Eigen/src/misc/RealSvd2x2.h:
+
+/usr/include/eigen3/Eigen/src/QR/CompleteOrthogonalDecomposition.h:
+
+/usr/include/eigen3/Eigen/src/QR/FullPivHouseholderQR.h:
+
+/usr/include/eigen3/Eigen/src/Householder/Householder.h:
+
+/usr/include/eigen3/Eigen/Householder:
+
+/usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h:
+
+/usr/include/eigen3/Eigen/Cholesky:
+
+/usr/include/eigen3/Eigen/SVD:
+
 /usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h:
 
 /usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h:
 
+/usr/include/eigen3/Eigen/src/LU/PartialPivLU.h:
+
 /usr/include/eigen3/Eigen/src/Core/BooleanRedux.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Umeyama.h:
 
 /usr/include/eigen3/Eigen/src/Core/BandMatrix.h:
 
@@ -799,7 +931,13 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/eigen3/Eigen/src/Core/products/TriangularSolverMatrix.h:
 
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:
+
+/usr/include/eigen3/Eigen/src/Householder/BlockHouseholder.h:
+
 /usr/include/eigen3/Eigen/src/Core/products/TriangularMatrixMatrix.h:
+
+/usr/include/eigen3/Eigen/src/Householder/HouseholderSequence.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/TriangularMatrixVector.h:
 
@@ -807,11 +945,15 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
 
+/usr/include/eigen3/Eigen/src/Geometry/EulerAngles.h:
+
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixVector.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/Parallelizer.h:
+
+/usr/include/eigen3/Eigen/src/misc/Kernel.h:
 
 /usr/include/eigen3/Eigen/src/Core/TriangularMatrix.h:
 
@@ -856,6 +998,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/eigen3/Eigen/src/Core/CwiseNullaryOp.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h:
+
+/usr/include/eigen3/Eigen/src/SVD/UpperBidiagonalization.h:
 
 /usr/include/eigen3/Eigen/src/Core/CwiseUnaryOp.h:
 
@@ -931,6 +1075,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/c++/9/bits/algorithmfwd.h:
 
+/usr/include/eigen3/Eigen/src/Cholesky/LDLT.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
@@ -940,6 +1086,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
 /usr/include/ctype.h:
+
+/usr/include/eigen3/Eigen/Jacobi:
 
 /usr/include/eigen3/Eigen/src/Core/functors/NullaryFunctors.h:
 
@@ -956,6 +1104,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/c++/9/new:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/eigen3/Eigen/src/QR/HouseholderQR.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
@@ -1017,6 +1167,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
+/usr/include/eigen3/Eigen/src/LU/FullPivLU.h:
+
 /usr/include/c++/9/clocale:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
@@ -1048,6 +1200,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointProduct.h:
 
 /usr/include/c++/9/typeinfo:
+
+/usr/include/eigen3/Eigen/src/Geometry/ParametrizedLine.h:
 
 /usr/include/c++/9/bits/functexcept.h:
 
@@ -1169,6 +1323,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/c++/9/bits/cxxabi_init_exception.h:
 
+/usr/include/eigen3/Eigen/src/SVD/SVDBase.h:
+
 /usr/include/c++/9/ios:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
@@ -1207,6 +1363,10 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/sched.h:
 
+/usr/include/eigen3/Eigen/src/SVD/JacobiSVD.h:
+
+/usr/include/eigen3/Eigen/Geometry:
+
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
@@ -1215,7 +1375,11 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/c++/9/initializer_list:
 
+/usr/include/eigen3/Eigen/QR:
+
 /home/crta/aaron_zavrsni/tcp_mg/tcp_mg.cpp:
+
+/usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointMatrixMatrix.h:
 
@@ -1232,6 +1396,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/c++/9/ext/aligned_buffer.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h:
 
 /usr/include/c++/9/cctype:
 
@@ -1281,6 +1447,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/alloca.h:
 
+/usr/include/eigen3/Eigen/src/Geometry/AlignedBox.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/stdio.h:
@@ -1296,6 +1464,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/eigen3/Eigen/src/Core/util/ForwardDeclarations.h:
 
 /usr/include/eigen3/Eigen/src/Core/DenseCoeffsBase.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/RotationBase.h:
 
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
@@ -1337,6 +1507,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/asm-generic/errno-base.h:
 
+/usr/include/eigen3/Eigen/src/Cholesky/LLT.h:
+
 /usr/include/c++/9/bits/stl_algobase.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
@@ -1350,6 +1522,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/c++/9/cmath:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
+/usr/include/eigen3/Eigen/src/misc/Image.h:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
@@ -1391,6 +1565,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 
 /usr/include/eigen3/Eigen/src/Core/arch/Default/ConjHelper.h:
 
+/usr/include/eigen3/Eigen/src/Geometry/Hyperplane.h:
+
 /usr/include/c++/9/bits/ostream.tcc:
 
 /usr/include/c++/9/bits/istream.tcc:
@@ -1400,6 +1576,8 @@ CMakeFiles/tcp_mg_tester.dir/tcp_mg_tester.cpp.o: /home/crta/aaron_zavrsni/tcp_m
 /usr/include/c++/9/ostream:
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/mmintrin.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Translation.h:
 
 /usr/include/c++/9/stdlib.h:
 
