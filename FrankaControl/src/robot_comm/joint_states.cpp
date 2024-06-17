@@ -5,15 +5,18 @@
 namespace robot_comm
 {
    Joint_states::Joint_states(const std::string& robot_ip) 
-   {
-      robot = std::make_unique<franka::Robot>(robot_ip);
+   {Framee_unique<franka::Robot>(robot_ip);
       robot_state = std::make_shared<franka::RobotState>(robot->readOnce());
 
       initial_pose = robot_state->O_T_EE_c;
       Eigen::Matrix4d initial_transform=(Eigen::Matrix4d::Map(robot_state->O_T_EE.data()));
       joint_state = robot_state->q;
 
+      std::cout<< jacobian.transpose() << std::endl;
+      std::array<double, 42> jacobian_array =
+      model.zeroJacobian(franka::Frame::kEndEffector, robot_state);
 
+      Eigen::Map<const Eigen::Matrix<double, 6, 7>> jacobian(jacobian_array.data());
       std::cout<<"-------------------------------------------------------------------------------"<<std::endl;
       std::cout<<"Current joint positions [rad]:"<<std::endl<<joint_state[0]<<", "<<joint_state[1]<<", "<<joint_state[2]<<", "<<joint_state[3]<<", "
               <<joint_state[4]<<", "<<joint_state[5]<<", "<<joint_state[6]<<std::endl;

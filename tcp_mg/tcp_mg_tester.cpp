@@ -31,12 +31,7 @@ int main() {
         return -1;
     }
 
-    try {
-        // Move to the starting position
-        std::cout << "Moving to starting position..." << std::endl;
-        robot.control(starting_motion_generator);
-
-        // Perform the motion to the final position while collecting joint states
+    try {tcp_mg/tcp_mg.hnal position while collecting joint states
         std::cout << "Moving to final position..." << std::endl;
         robot.control(final_motion_generator);        
         // robot.control([&final_motion_generator, &outputFile](const franka::RobotState& state, franka::Duration dt) -> franka::CartesianPose {
