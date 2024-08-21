@@ -30,13 +30,12 @@ int main(int argc, char** argv) {
   // Connect to the robot
   franka::Robot robot("192.168.40.45");
   franka::Model model = robot.loadModel();
-  // std::ofstream outputFile("velocity_states.txt");
 
   // parameters for the conrollers
 
-  constexpr double k_p{0.001};  // NOLINT (readability-identifier-naming)
-  constexpr double k_i{0.1};  // NOLINT (readability-identifier-naming)
-  // constexpr double k_d{0.1};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{0.01};  // NOLINT (readability-identifier-naming)
+  constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
 
   try {
     franka::Robot robot(argv[1]);
@@ -67,7 +66,7 @@ int main(int argc, char** argv) {
 
     franka::RobotState initial_state = robot.readOnce();
 
-    Eigen::VectorXd initial_pose_ext(3), pose_error_integral(3), pose_d(3), last_pose(3), next_pose(3);
+    Eigen::VectorXd initial_pose_ext(3), pose_error_integral(3), pose_error_derivative(3), pose_d(3), last_pose(3), next_pose(3);
     Eigen::Vector3d initial_position;
     double time = 0.0;
     auto get_position = [](const franka::RobotState& robot_state) {
@@ -102,14 +101,32 @@ int main(int argc, char** argv) {
       Eigen::Map<const Eigen::Matrix<double, 6, 7>> jacobian(jacobian_array.data());
       Eigen::Map<const Eigen::Matrix<double, 7, 1>> q(robot_state.q.data());
 
-      Eigen::VectorXd pose_ext(3), desired_joint_motion(7), control_output(3);
+      Eigen::VectorXd pose_ext(3), desired_joint_motion(7), control_output(3), pose_ext_prior(3);
       desired_joint_motion.setZero();
       pose_ext << pose_d - get_position(robot_state);
-      pose_error_integral +=  (pose_d - get_position(robot_state)); // * period.toSec(); s ovim sam mnozio s lijeve strane ali ne kuzim bas zasto
+
+      // std::cout << "pose_ext: " << pose_ext << '\n' << pose_d << '\n' << "get_position(robot_state)" << get_position(robot_state) << std::endl;
+
+      pose_error_integral +=  period.toSec() * (pose_d - get_position(robot_state)); // * period.toSec(); s ovim sam mnozio s lijeve strane ali ne kuzim bas zasto
+
+      std::cout << "pose_error_integral: " << pose_error_integral << std::endl;
+
+      pose_error_derivative = (pose_ext - pose_ext_prior) / period.toSec();
+      
+      if(time == 0.0){
+        pose_error_derivative[0] = 0.0;
+        pose_error_derivative[1] = 0.0;
+        pose_error_derivative[2] = 0.0;
+      }
+
+      pose_ext_prior << pose_ext;
 
       Eigen::VectorXd result_coordinates(6);
 
-      control_output << k_p * pose_ext + k_i * pose_error_integral; //(next_pose - last_pose)/0.001 + ne znam zasto al to je stajalo jos tu pokraj
+      control_output << k_p * pose_ext + k_i * pose_error_integral + k_d * pose_error_derivative; //(next_pose - last_pose)/0.001 + ne znam zasto al to je stajalo jos tu pokraj
+
+      std::cout << "control_output: " << control_output << std::endl;
+      std::cout << "pose_ext: " << pose_ext << '\n' << "pose_error_integral: " << pose_error_integral << '\n' << "pose_error_derivative: " << pose_error_derivative << '\n' << std::endl;
 
       result_coordinates.head(3) = control_output.head(3);
       result_coordinates[3] = -3 * M_PI_4;
