@@ -14,9 +14,9 @@
 #include "tcp_mg.h" // treba zamijeniti s example_common.h
 
 
-// void writeVelocityStates(double time, double v_x, double v_y, double v_z, std::ofstream& file) {
-//     file << time << " " << v_x << " " << v_y << " " << v_z << "\n";
-// }
+void writeTCPPosition(double time, const Eigen::Vector3d& position, std::ofstream& file) {
+  file << time << " " << position[0] << " " << position[1] << " " << position[2] << "\n";
+}
 
 
 int main(int argc, char** argv) {
@@ -24,6 +24,9 @@ int main(int argc, char** argv) {
     std::cerr << "Usage: " << argv[0] << " <robot-hostname>" << std::endl;
     return -1;
   }
+
+  std::ofstream outputFile("tcp_positions.txt");
+
   // Connect to the robot
   franka::Robot robot("192.168.40.45");
   franka::Model model = robot.loadModel();
@@ -31,8 +34,8 @@ int main(int argc, char** argv) {
 
   // parameters for the conrollers
 
-  constexpr double k_p{100.0};  // NOLINT (readability-identifier-naming)
-  constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{0.001};  // NOLINT (readability-identifier-naming)
+  constexpr double k_i{0.1};  // NOLINT (readability-identifier-naming)
   // constexpr double k_d{0.1};  // NOLINT (readability-identifier-naming)
 
   try {
@@ -41,7 +44,7 @@ int main(int argc, char** argv) {
 
 
     // First move the robot to a suitable joint configuration
-    std::array<double, 6> q_goal = {{0.5, 0.3, 0.1, -3 * M_PI_4, 0, M_PI_2}};  
+    std::array<double, 6> q_goal = {{0.5, 0.3, 0.5, -3 * M_PI_4, 0, M_PI_2}};  
     MotionGenerator motion_generator(0.1, q_goal);  /* !!!!!! ovo je moj motion_generator u koji mogu direktno unjeti pozu tcp, 
                                                       ali moguce ga je jednostavno zamijeniti s examples_common.h motion_generatorom */
     std::cout << "WARNING: This example will move the robot! "
@@ -72,11 +75,13 @@ int main(int argc, char** argv) {
                              robot_state.O_T_EE[14]);
     };
 
-    pose_d << 0.5, 0.0, 0.1;
+    pose_d << 0.5, 0.0, 0.5;
     pose_error_integral.setZero();
 
-    auto motion_control_callback = [&](const franka::RobotState& robot_state,
-                                      franka::Duration period) -> franka::JointVelocities{
+
+    std::function<franka::JointVelocities(const franka::RobotState&, franka::Duration)>
+      motion_control_callback = [&](const franka::RobotState& robot_state,
+                                      franka::Duration period) -> franka::JointVelocities {
       time += period.toSec();
 
       if (time == 0.0) {
@@ -84,10 +89,10 @@ int main(int argc, char** argv) {
           last_pose[1] = 0.0;
           last_pose[2] = 0.0;
       }
-
-      last_pose = next_pose;
-
+      
       next_pose = get_position(robot_state);
+      
+      last_pose = next_pose;
 
       Eigen::Map<const Eigen::VectorXd> q_current(robot_state.q_d.data(), robot_state.q_d.size());
 
@@ -100,11 +105,11 @@ int main(int argc, char** argv) {
       Eigen::VectorXd pose_ext(3), desired_joint_motion(7), control_output(3);
       desired_joint_motion.setZero();
       pose_ext << pose_d - get_position(robot_state);
-      pose_error_integral += period.toSec() * (pose_d - get_position(robot_state));
+      pose_error_integral +=  (pose_d - get_position(robot_state)); // * period.toSec(); s ovim sam mnozio s lijeve strane ali ne kuzim bas zasto
 
       Eigen::VectorXd result_coordinates(6);
 
-      control_output << (next_pose - last_pose)/0.001 + k_p * pose_ext + k_i * pose_error_integral;
+      control_output << k_p * pose_ext + k_i * pose_error_integral; //(next_pose - last_pose)/0.001 + ne znam zasto al to je stajalo jos tu pokraj
 
       result_coordinates.head(3) = control_output.head(3);
       result_coordinates[3] = -3 * M_PI_4;
@@ -116,6 +121,9 @@ int main(int argc, char** argv) {
       std::array<double, 7> desired_joint_motion_array;
       Eigen::VectorXd::Map(&desired_joint_motion_array[0], desired_joint_motion.size()) =
           desired_joint_motion;
+
+      // Write TCP position to file
+      writeTCPPosition(time, next_pose, outputFile);    
 
       return desired_joint_motion_array;
     };
@@ -133,5 +141,11 @@ int main(int argc, char** argv) {
     // print exception
     std::cout << ex.what() << std::endl;
   }
+
+  outputFile.close();
+
+  system("python3 ../tcp_positions.py");
+
+
   return 0;
 }
