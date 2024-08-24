@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
   // parameters for the conrollers
 
-  constexpr double k_p{0.01};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{100.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
 
@@ -129,12 +129,13 @@ int main(int argc, char** argv) {
       std::cout << "pose_ext: " << pose_ext << '\n' << "pose_error_integral: " << pose_error_integral << '\n' << "pose_error_derivative: " << pose_error_derivative << '\n' << std::endl;
 
       result_coordinates.head(3) = control_output.head(3);
-      result_coordinates[3] = -3 * M_PI_4;
+      result_coordinates[3] = 0; //-3 * M_PI_4
       result_coordinates[4] = 0;
-      result_coordinates[5] = M_PI_2;
+      result_coordinates[5] = 0; //M_PI_2
 
-      desired_joint_motion = (jacobian.transpose() * result_coordinates)*0.01;
+      std::cout << "result_coordinates: " << result_coordinates << '\n' << std::endl;
 
+      desired_joint_motion = (jacobian.transpose() * result_coordinates)*0.1; 
       std::array<double, 7> desired_joint_motion_array;
       Eigen::VectorXd::Map(&desired_joint_motion_array[0], desired_joint_motion.size()) =
           desired_joint_motion;

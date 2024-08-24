@@ -17,3 +17,6 @@ Praćenje određene krivulje ili profila. To može uključivati linearne trajekt
 5. Eksperimentalno Testiranje
   - Testirajte svaki kontrolni algoritam s definiranim profilom gibanja.
   - Zabilježite relevantne podatke i evaluirajte performanse.
+
+
+https://medium.com/@jaems33/understanding-robot-motion-pid-control-8931899c31df
