@@ -1,5 +1,6 @@
 #include <cmath>
 #include <array>
+#include <atomic>
 #include <iostream>
 
 #include <Eigen/Core>
@@ -10,6 +11,8 @@
 #include <franka/model.h>
 #include <franka/duration.h>
 #include <franka/robot.h>
+#include <franka/rate_limiting.h>
+
 
 #include "tcp_mg.h" // treba zamijeniti s example_common.h
 
@@ -33,9 +36,11 @@ int main(int argc, char** argv) {
 
   // parameters for the conrollers
 
-  constexpr double k_p{100.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{1000.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
+
+  std::atomic_bool running{true};
 
   try {
     franka::Robot robot(argv[1]);
@@ -66,7 +71,7 @@ int main(int argc, char** argv) {
 
     franka::RobotState initial_state = robot.readOnce();
 
-    Eigen::VectorXd initial_pose_ext(3), pose_error_integral(3), pose_error_derivative(3), pose_d(3), last_pose(3), next_pose(3);
+    Eigen::VectorXd initial_pose_ext(3), pose_error_integral(3), pose_error_derivative(3), pose_d(3), last_pose(3), next_pose(3), pose_final(3), pose_aux(3);
     Eigen::Vector3d initial_position;
     double time = 0.0;
     auto get_position = [](const franka::RobotState& robot_state) {
@@ -74,9 +79,13 @@ int main(int argc, char** argv) {
                              robot_state.O_T_EE[14]);
     };
 
-    pose_d << 0.5, 0.0, 0.5;
-    pose_error_integral.setZero();
+    pose_final << 0.5, 0.0, 0.5;
+    pose_aux << (pose_final - get_position(initial_state))*0.001;
+    pose_d << get_position(initial_state);
 
+    int i=1000;
+
+    pose_error_integral.setZero();
 
     std::function<franka::JointVelocities(const franka::RobotState&, franka::Duration)>
       motion_control_callback = [&](const franka::RobotState& robot_state,
@@ -88,6 +97,15 @@ int main(int argc, char** argv) {
           last_pose[1] = 0.0;
           last_pose[2] = 0.0;
       }
+
+      if (i > 0) {
+        i--;
+        pose_d += pose_aux;
+      } else {
+        pose_d = pose_final;
+      }
+
+      std::cout << "pose_d: " << pose_d << '\n' << std::endl;
       
       next_pose = get_position(robot_state);
       
@@ -109,7 +127,7 @@ int main(int argc, char** argv) {
 
       pose_error_integral +=  period.toSec() * (pose_d - get_position(robot_state)); // * period.toSec(); s ovim sam mnozio s lijeve strane ali ne kuzim bas zasto
 
-      std::cout << "pose_error_integral: " << pose_error_integral << std::endl;
+      // std::cout << "pose_error_integral: " << pose_error_integral << std::endl;
 
       pose_error_derivative = (pose_ext - pose_ext_prior) / period.toSec();
       
@@ -125,8 +143,8 @@ int main(int argc, char** argv) {
 
       control_output << k_p * pose_ext + k_i * pose_error_integral + k_d * pose_error_derivative; //(next_pose - last_pose)/0.001 + ne znam zasto al to je stajalo jos tu pokraj
 
-      std::cout << "control_output: " << control_output << std::endl;
-      std::cout << "pose_ext: " << pose_ext << '\n' << "pose_error_integral: " << pose_error_integral << '\n' << "pose_error_derivative: " << pose_error_derivative << '\n' << std::endl;
+      // std::cout << "control_output: " << control_output << std::endl;
+      // std::cout << "pose_ext: " << pose_ext << '\n' << "pose_error_integral: " << pose_error_integral << '\n' << "pose_error_derivative: " << pose_error_derivative << '\n' << std::endl;
 
       result_coordinates.head(3) = control_output.head(3);
       result_coordinates[3] = 0; //-3 * M_PI_4
@@ -135,7 +153,7 @@ int main(int argc, char** argv) {
 
       std::cout << "result_coordinates: " << result_coordinates << '\n' << std::endl;
 
-      desired_joint_motion = (jacobian.transpose() * result_coordinates)*0.1; 
+      desired_joint_motion = (jacobian.transpose() * result_coordinates)*0.01; 
       std::array<double, 7> desired_joint_motion_array;
       Eigen::VectorXd::Map(&desired_joint_motion_array[0], desired_joint_motion.size()) =
           desired_joint_motion;
@@ -143,6 +161,10 @@ int main(int argc, char** argv) {
       // Write TCP position to file
       writeTCPPosition(time, next_pose, outputFile);    
 
+      if (get_position(robot_state) == pose_final) {
+        running = false;
+        return franka::MotionFinished(franka::JointVelocities(desired_joint_motion_array));
+      }
       return desired_joint_motion_array;
     };
   std::cout << "WARNING: Make sure sure that no endeffector is mounted and that the robot's last "
@@ -155,9 +177,9 @@ int main(int argc, char** argv) {
   // start real-time control loop
   robot.control(motion_control_callback);
 
-  } catch (const std::exception& ex) {
-    // print exception
-    std::cout << ex.what() << std::endl;
+  } catch (const franka::Exception& ex) {
+    running = false;
+    std::cerr << ex.what() << std::endl;
   }
 
   outputFile.close();
