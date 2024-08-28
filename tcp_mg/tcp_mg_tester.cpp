@@ -21,8 +21,8 @@ int main() {
     std::array<double, 6> final_position = {{0.5, 0.0, 0.5, M_PI, M_PI_4, 0}};
 
     // Create MotionGenerator objects for the starting and final positions
-    MotionGenerator starting_motion_generator(0.5, starting_position);
-    MotionGenerator final_motion_generator(0.5, final_position);
+    MotionGenerator starting_motion_generator(0.1, starting_position);
+    MotionGenerator final_motion_generator(0.1, final_position);
 
     // Open a file to write joint states
     std::ofstream outputFile("joint_states.txt");
@@ -31,13 +31,14 @@ int main() {
         return -1;
     }
 
-    try {tcp_mg/tcp_mg.hnal position while collecting joint states
+    try {
         std::cout << "Moving to final position..." << std::endl;
-        robot.control(final_motion_generator);        
-        // robot.control([&final_motion_generator, &outputFile](const franka::RobotState& state, franka::Duration dt) -> franka::CartesianPose {
-        //     writeJointStates(state, outputFile);
-        //     return final_motion_generator(state, dt);
-        // });
+        robot.control(starting_motion_generator);   
+
+        robot.control([&final_motion_generator, &outputFile](const franka::RobotState& state, franka::Duration dt) -> franka::CartesianPose {
+            writeJointStates(state, outputFile);
+            return final_motion_generator(state, dt);
+        });
 
         std::cout << "Motion completed successfully." << std::endl;
 

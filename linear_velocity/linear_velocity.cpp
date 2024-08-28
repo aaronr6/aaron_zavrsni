@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <Eigen/Core>
+#include <Eigen/Dense>
 
 #include <fstream>
 
@@ -36,7 +37,7 @@ int main(int argc, char** argv) {
 
   // parameters for the conrollers
 
-  constexpr double k_p{1000.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{20000.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
   constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
 
@@ -48,7 +49,7 @@ int main(int argc, char** argv) {
 
 
     // First move the robot to a suitable joint configuration
-    std::array<double, 6> q_goal = {{0.5, 0.3, 0.5, -3 * M_PI_4, 0, M_PI_2}};  
+    std::array<double, 6> q_goal = {{0.5, 0.0, 0.5, -3 * M_PI_4, 0, M_PI_2}};  
     MotionGenerator motion_generator(0.1, q_goal);  /* !!!!!! ovo je moj motion_generator u koji mogu direktno unjeti pozu tcp, 
                                                       ali moguce ga je jednostavno zamijeniti s examples_common.h motion_generatorom */
     std::cout << "WARNING: This example will move the robot! "
@@ -60,13 +61,21 @@ int main(int argc, char** argv) {
 
     // set collision behavior
 
-    robot.setCollisionBehavior(
-        {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
-        {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
-        {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
-        {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
-    robot.setJointImpedance({{300, 300, 300, 250, 250, 200, 200}});
-    robot.setCartesianImpedance({{300, 300, 300, 30, 30, 30}});
+    // robot.setCollisionBehavior(
+    //     {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
+    //     {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
+    //     {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
+    //     {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
+    // robot.setJointImpedance({{300, 300, 300, 250, 250, 200, 200}});
+    // robot.setCartesianImpedance({{300, 300, 300, 30, 30, 30}});
+
+      robot.setCollisionBehavior(
+        {{60, 60, 54.0, 54.0, 48.0, 42.0, 36.0}}, {{60, 60, 54.0, 54.0, 48.0, 42.0, 36.0}},
+        {{60, 60, 54.0, 54.0, 48.0, 42.0, 36.0}}, {{60, 60, 54.0, 54.0, 48.0, 42.0, 36.0}},
+        {{60, 60, 60, 75.0, 75.0, 75.0}}, {{60, 60, 60, 75.0, 75.0, 75.0}},
+        {{60, 60, 60, 75.0, 75.0, 75.0}}, {{60, 60, 60, 75.0, 75.0, 75.0}});
+      robot.setJointImpedance({{900, 900, 900, 750, 750, 600, 600}});
+      robot.setCartesianImpedance({{900, 900, 900, 90, 90, 90}});
 
 
     franka::RobotState initial_state = robot.readOnce();
@@ -79,12 +88,16 @@ int main(int argc, char** argv) {
                              robot_state.O_T_EE[14]);
     };
 
-    pose_final << 0.5, 0.0, 0.5;
-    pose_aux << (pose_final - get_position(initial_state))*0.001;
-    pose_d << get_position(initial_state);
-
     int i=1000;
 
+    pose_final << 0.5, 0.0, 0.5;
+    pose_aux << (pose_final - get_position(initial_state))/i;
+    pose_d << get_position(initial_state);
+
+    
+
+    Eigen::VectorXd allowed_error(3);
+    allowed_error << 0.0001, 0.0001, 0.0001;true
     pose_error_integral.setZero();
 
     std::function<franka::JointVelocities(const franka::RobotState&, franka::Duration)>
@@ -153,6 +166,8 @@ int main(int argc, char** argv) {
 
       std::cout << "result_coordinates: " << result_coordinates << '\n' << std::endl;
 
+      std::cout << "get_position(robot_state)" << get_position(robot_state) << std::endl;
+
       desired_joint_motion = (jacobian.transpose() * result_coordinates)*0.01; 
       std::array<double, 7> desired_joint_motion_array;
       Eigen::VectorXd::Map(&desired_joint_motion_array[0], desired_joint_motion.size()) =
@@ -161,10 +176,10 @@ int main(int argc, char** argv) {
       // Write TCP position to file
       writeTCPPosition(time, next_pose, outputFile);    
 
-      if (get_position(robot_state) == pose_final) {
-        running = false;
-        return franka::MotionFinished(franka::JointVelocities(desired_joint_motion_array));
-      }
+      // if ((get_position(robot_state) - pose_final).cwiseAbs().maxCoeff() <= allowed_error.maxCoeff()) {
+      //   running = false;
+      //   return franka::MotionFinished(franka::JointVelocities(desired_joint_motion_array));
+      // }
       return desired_joint_motion_array;
     };
   std::cout << "WARNING: Make sure sure that no endeffector is mounted and that the robot's last "
