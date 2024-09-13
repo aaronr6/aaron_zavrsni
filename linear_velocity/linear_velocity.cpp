@@ -43,7 +43,7 @@ void writeTCPPosition(double time, const Eigen::Vector3d& position, const Eigen:
   file << time << " " << position[0] << " " << position[1] << " " << position[2] << " "
        << pose[0] << " " << pose[1] << " " << pose[2] << " "
        << rpy[0] << " " << rpy[1] << " " << rpy[2] << " " 
-       << rpy_d[0] << " " << rpy_d[1] << " " << rpy_d[1] <<"\n";
+       << rpy_d[0] << " " << rpy_d[1] << " " << rpy_d[2] + M_PI <<"\n";
 }
 
 
@@ -64,9 +64,9 @@ int main(int argc, char** argv) {
 //* ############### parameters for the controlers ###################
 //* #################################################################
 
-  constexpr double k_p{5.5};  // NOLINT (readability-identifier-naming)
-  constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
-  constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_p{5};  // NOLINT (readability-identifier-naming)
+  constexpr double k_i{1.0};  // NOLINT (readability-identifier-naming)
+  constexpr double k_d{0.05};  // NOLINT (readability-identifier-naming)
 
 //* #################################################################
 //* #################################################################
@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
   pose_aux << (pose_final_l - get_position(initial_state))/i;
 
   // rotation part of the movement
-  pose_final_r << -2 * M_PI_4, -M_PI_4, 3 * M_PI_4; 
+  pose_final_r << 3 * M_PI_4, -M_PI_4, -2 * M_PI_4; 
   //defining my first quaternion from the starting position
   Rot << pose_array[0], pose_array[4], pose_array[8],
         pose_array[1], pose_array[5], pose_array[9],
@@ -166,17 +166,11 @@ int main(int argc, char** argv) {
   Eigen::Quaterniond q_0_(Rot);
   q_0_ = q_0_.normalized();
 
-  std::cout << "q_0_: " << q_0_.coeffs() << std::endl;
-
   Eigen::AngleAxisd rollAngle(pose_final_r[0], Eigen::Vector3d::UnitX());
   Eigen::AngleAxisd pitchAngle(pose_final_r[1], Eigen::Vector3d::UnitY());
   Eigen::AngleAxisd yawAngle(pose_final_r[2], Eigen::Vector3d::UnitZ());
-  Eigen::Quaterniond q_1_ = rollAngle * pitchAngle * yawAngle;
+  Eigen::Quaterniond q_1_ = yawAngle * pitchAngle * rollAngle;
   q_1_ = q_1_.normalized();
-
-  std::cout << "q_1_: " << q_1_.coeffs() << std::endl;
-
-
 
 
   //* #################################################################
@@ -232,7 +226,7 @@ int main(int argc, char** argv) {
 
       vel_d << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
-// MOLIM TE PROMIJENI OVO,  JER OVO JE PRESTRASNO I SAMO SE SRAMOTIS
+// MOLIM TE PROMIJENI OVO, JER OVO JE PRESTRASNO I SAMO SE SRAMOTIS
         
       j_vel_d = (jacobian.transpose() * vel_d);
 
@@ -260,12 +254,14 @@ int main(int argc, char** argv) {
       pose_array[14] = pose_d[2];
 
 
-      Eigen::Matrix4d X = Eigen::Map<const Eigen::Matrix4d>(robot_state.O_T_EE.data());
+      // Eigen::Matrix4d X = Eigen::Map<const Eigen::Matrix4d>(robot_state.O_T_EE.data());
 
-      Eigen::VectorXd X_vec = convertTransformationToVector(X);
+      // Eigen::VectorXd X_vec = convertTransformationToVector(X);
 
-      Eigen::Vector3d rpy;
-      rpy << X_vec[3], X_vec[4], X_vec[5];
+      // Eigen::Vector3d rpy;
+      // rpy << X_vec[3], X_vec[4], X_vec[5];
+
+      Eigen::Vector3d rpy = Rot_d.eulerAngles(0, 1, 2);
 
       
       std::array<double, 7> q_actual = initial_state.q;
