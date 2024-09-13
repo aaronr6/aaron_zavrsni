@@ -19,12 +19,31 @@
 #include "tcp_mg.h"
 #include "franka_ik_He.hpp"
 
+
+//! Function to convert a transformation matrix to a 6x1 vector (rotation and translation components)
+Eigen::VectorXd convertTransformationToVector(const Eigen::Matrix4d& X) {
+    Eigen::VectorXd vec(6);
+
+    // Translational part
+    vec.head<3>() = X.block<3, 1>(0, 3);
+
+    // Rotational part (angle-axis)
+    Eigen::Matrix3d R = X.block<3, 3>(0, 0);
+    Eigen::AngleAxisd angle_axis(R);
+    vec.tail<3>() = angle_axis.angle() * angle_axis.axis();
+
+    return vec;
+}
+
 // ############################################
 // function to write the TCP position to a file
 // ############################################
 
-void writeTCPPosition(double time, const Eigen::Vector3d& position, const Eigen::Vector3d& pose, std::ofstream& file) {
-  file << time << " " << position[0] << " " << position[1] << " " << position[2] << " " << pose[0] << " " << pose[1] << " " << pose[2] << "\n";
+void writeTCPPosition(double time, const Eigen::Vector3d& position, const Eigen::Vector3d& pose, const Eigen::Vector3d& rpy, const Eigen::Vector3d& rpy_d, std::ofstream& file) {
+  file << time << " " << position[0] << " " << position[1] << " " << position[2] << " "
+       << pose[0] << " " << pose[1] << " " << pose[2] << " "
+       << rpy[0] << " " << rpy[1] << " " << rpy[2] << " " 
+       << rpy_d[0] << " " << rpy_d[1] << " " << rpy_d[1] <<"\n";
 }
 
 
@@ -47,7 +66,7 @@ int main(int argc, char** argv) {
 
   constexpr double k_p{5.5};  // NOLINT (readability-identifier-naming)
   constexpr double k_i{0.0};  // NOLINT (readability-identifier-naming)
-  constexpr double k_d{0.5};  // NOLINT (readability-identifier-naming)
+  constexpr double k_d{0.0};  // NOLINT (readability-identifier-naming)
 
 //* #################################################################
 //* #################################################################
@@ -64,7 +83,7 @@ int main(int argc, char** argv) {
 
     // First move the robot to a suitable joint configuration
     std::array<double, 6> q_goal = {{0.5, 0.3, 0.5, -3 * M_PI_4, 0, M_PI_2}};  
-    MotionGenerator motion_generator(0.1, q_goal);  /* !!!!!! ovo je moj motion_generator u koji mogu direktno unjeti pozu tcp, 
+    MotionGenerator motion_generator(0.5, q_goal);  /* !!!!!! ovo je moj motion_generator u koji mogu direktno unjeti pozu tcp, 
                                                       ali moguce ga je jednostavno zamijeniti s examples_common.h motion_generatorom */
     std::cout << "WARNING: This example will move the robot! "
               << "Please make sure to have the user stop button at hand!" << std::endl
@@ -128,19 +147,18 @@ int main(int argc, char** argv) {
 
 
   //* #################################################################
-  //* ############### from task space to joint space ###################
+  //* ############### from task spacXe to joint space ###################
   //* #################################################################
 
   // grabbing the beginning robot pose
   std::array<double, 16> pose_array = initial_state.O_T_EE_d;
   // for now, changing the coordinates I want to change
 
-  // linear part of the movement
-  pose_final_l << 0.5, 0.0, 0.5;
+  pose_final_l << 0.4, 0.0, 0.4;
   pose_aux << (pose_final_l - get_position(initial_state))/i;
 
   // rotation part of the movement
-  pose_final_r << -3 * M_PI_4, -M_PI_4, M_PI_2, 
+  pose_final_r << -2 * M_PI_4, -M_PI_4, 3 * M_PI_4; 
   //defining my first quaternion from the starting position
   Rot << pose_array[0], pose_array[4], pose_array[8],
         pose_array[1], pose_array[5], pose_array[9],
@@ -186,7 +204,7 @@ int main(int argc, char** argv) {
       //                         c_aux_[1], c_aux_[5], c_aux_[9],
       //                         c_aux_[2], c_aux_[6], c_aux_[10];
       // Eigen::Quaterniond q_aux_(Rot);
-      // Eigen::Quaterniond q_ = q_aux_.normalized();
+      // Eigen::Quaterniond q_ = q_aux_X.normalized();
       
       next_pose = get_position(robot_state);
       last_pose = next_pose;
@@ -239,9 +257,15 @@ int main(int argc, char** argv) {
       pose_array[13] = pose_d[1];
       pose_array[14] = pose_d[2];
 
-      // Print the elements of pose_array
-      
 
+      Eigen::Matrix4d X = Eigen::Map<const Eigen::Matrix4d>(robot_state.O_T_EE.data());
+
+      Eigen::VectorXd X_vec = convertTransformationToVector(X);
+
+      Eigen::Vector3d rpy;
+      rpy << X_vec[3], X_vec[4], X_vec[5];
+
+      
       std::array<double, 7> q_actual = initial_state.q;
 
       // initializing the desired joint positions which will be sent to the robot
@@ -270,7 +294,7 @@ int main(int argc, char** argv) {
 
       desired_joint_motion << (j_vel_d + k_p * vel_error + k_i * vel_error_integral + k_d * vel_error_derivative);
 
-      std::cout << "desired_joint_motion\n" << desired_joint_motion << std::endl;
+      // std::cout << "desired_joint_motion\n" << desired_joint_motion << std::endl;
 
 
 
@@ -307,7 +331,7 @@ int main(int argc, char** argv) {
 
       // std::cout << "control_output: " << control_output << std::endl;
 
-      // result_coordinates.head(3) = control_output.head(3);
+      // result_coordinates.head(3) = control_output.head(3);rpy
       // result_coordinates[3] = 0; //-3 * M_PI_4
       // result_coordinates[4] = 0;
       // result_coordinates[5] = 0; //M_PI_2
@@ -322,15 +346,16 @@ int main(int argc, char** argv) {
       Eigen::VectorXd::Map(&desired_joint_motion_array[0], desired_joint_motion.size()) =
           desired_joint_motion;
 
-      // Write TCP position to file
-      writeTCPPosition(time, next_pose, pose_final_l, outputFile);    
+      //! Write TCP position to file
+      writeTCPPosition(time, next_pose, pose_final_l, rpy, pose_final_r, outputFile);  
 
+    
 
       //checking the error marging so that i can stop the movement, otherwise it would go on forever
-      //* if ((q_current_unique - q_j_final_map).cwiseAbs().maxCoeff() <= allowed_error.maxCoeff()) {
-      //*   running = false;
-      //*   return franka::MotionFinished(franka::JointVelocities(desired_joint_motion_array));
-      // }
+      if ((q_current_unique - q_j_final_map).cwiseAbs().maxCoeff() <= allowed_error.maxCoeff()) {
+         running = false;
+         return franka::MotionFinished(franka::JointVelocities(desired_joint_motion_array));
+      }
       return desired_joint_motion_array;
     };
   std::cout << "WARNING: Make sure sure that no endeffector is mounted and that the robot's last "
