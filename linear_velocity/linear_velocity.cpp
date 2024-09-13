@@ -232,6 +232,8 @@ int main(int argc, char** argv) {
 
       vel_d << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
+// MOLIM TE PROMIJENI OVO,  JER OVO JE PRESTRASNO I SAMO SE SRAMOTIS
+        
       j_vel_d = (jacobian.transpose() * vel_d);
 
       if (i > 0) {
